@@ -36,7 +36,10 @@ func (fi *FalconImage) imageFilePath() (string, error) {
 			return "", err
 		}
 		defer f.Close()
-		io.Copy(f, &fi.tar)
+		_, err = io.Copy(f, &fi.tar)
+		if err != nil {
+			return "", err
+		}
 	} else {
 		filename = filepath.Join(fi.tempDir, "falcon-image.tar.bz2")
 	}
