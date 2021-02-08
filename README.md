@@ -1,4 +1,4 @@
-# kubectl-falcon
+# kubectl-falcon ![Build CI](https://github.com/CrowdStrike/kubectl-falcon/workflows/Build%20CI/badge.svg)
 
 [Falcon](https://www.crowdstrike.com/) is the [CrowdStrike](https://www.crowdstrike.com/)
 platform purpose-built to stop breaches via a unified set of cloud-delivered
