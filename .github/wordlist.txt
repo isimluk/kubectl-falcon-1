@@ -6,4 +6,5 @@ Golang
 initialisation
 SDK
 gofalcon
+kubectl
 pre
