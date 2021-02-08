@@ -10,11 +10,17 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [macos-latest, ubuntu-latest]
         go-version: [1.14.x, 1.15.x]
 
     runs-on: ${{ matrix.os }}
     steps:
+
+    - name: Install dependencies
+      uses: mstksg/get-package@master
+      with:
+        brew: gpgme
+        apt-get: libgpgme-dev libbtrfs-dev libdevmapper-dev
 
     - name: Set up Go ${{ matrix.go-version }}
       uses: actions/setup-go@v1
@@ -30,12 +36,17 @@ jobs:
 
     - name: Build
       run: |
+        PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/x86_64-linux-gnu/pkgconfig/
+        export PKG_CONFIG_PATH
         make build
 
     - name: Unit tests
       run: go test ./...
     - name: Run golangci-lint
       uses: golangci/golangci-lint-action@v2
+      env:
+        PKG_CONFIG_PATH: /usr/lib/x86_64-linux-gnu/pkgconfig/
       with:
         version: v1.29
         args: --timeout=3m12s
+        skip-go-installation: true
