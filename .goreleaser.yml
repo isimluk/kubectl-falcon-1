@@ -7,13 +7,10 @@ builds:
   - id: falcon
     goos:
     - linux
-    - windows
-    - darwin
     goarch:
     - amd64
-    - "386"
     env:
-      - CGO_ENABLED=0
+      - CGO_ENABLED=1
       - GO111MODULE=on
     main: ./main.go
     ldflags: -s -w
