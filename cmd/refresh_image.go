@@ -61,7 +61,7 @@ func (opts *refreshImageOptions) run(args []string, stdout io.Writer) error {
 	if err != nil {
 		return fmt.Errorf("Error loading trust policy: %v", err)
 	}
-	defer policyContext.Destroy()
+	defer func() { _ = policyContext.Destroy() }()
 
 	destRef, err := alltransports.ParseImageName(args[0])
 	if err != nil {
@@ -80,7 +80,8 @@ func (opts *refreshImageOptions) run(args []string, stdout io.Writer) error {
 	if err != nil {
 		return fmt.Errorf("Failed to pull falcon image: %v", err)
 	}
-	defer falconImage.Delete()
+	defer func() { 	_ = falconImage.Delete() }()
+
 	ref, err := falconImage.ImageReference()
 	if err != nil {
 		return fmt.Errorf("Failed to build internal image representation for falcon image: %v", err)
